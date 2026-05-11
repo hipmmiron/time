@@ -1,1 +1,1 @@
-Just time, you can tell your AI to look at this link https://hipmmiron.github.io/time and it will know the time. Also you can give AI link https://time.aetho.su this my domain on vercel (if not works - https://time.aetho.su/api/time)
+Just time, you can tell your AI to look at this link https://time.aetho.su and it will know the time. (if not works - https://time.aetho.su/api/time)
