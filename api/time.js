@@ -1,45 +1,54 @@
 export default function handler(req, res) {
   try {
-    // Таймзона из URL
     const tz = req.query.tz || 'UTC';
-
     const now = new Date();
 
-    // Проверка таймзоны
-    Intl.DateTimeFormat(undefined, {
-      timeZone: tz
-    });
+    // проверка таймзоны
+    Intl.DateTimeFormat(undefined, { timeZone: tz });
 
-    // День года
-    const start = Date.UTC(now.getUTCFullYear(), 0, 0);
-    const diff = now.getTime() - start;
-    const dayOfYear = Math.floor(diff / 86400000);
-
-    // Форматированное локальное время
-    const localTime = new Intl.DateTimeFormat('en-GB', {
+    const dateParts = new Intl.DateTimeFormat('en-GB', {
       timeZone: tz,
       year: 'numeric',
-      month: '2-digit',
+      month: 'long',
       day: '2-digit',
+      weekday: 'long'
+    }).formatToParts(now);
+
+    const timeParts = new Intl.DateTimeFormat('en-GB', {
+      timeZone: tz,
       hour: '2-digit',
       minute: '2-digit',
       second: '2-digit',
       hour12: false
-    }).format(now);
+    }).formatToParts(now);
 
-    // День недели
-    const weekday = new Intl.DateTimeFormat('en-GB', {
-      timeZone: tz,
-      weekday: 'long'
-    }).format(now);
+    const get = (arr, type) => arr.find(x => x.type === type)?.value;
+
+    const dayOfYear = Math.floor(
+      (Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()) -
+        Date.UTC(now.getUTCFullYear(), 0, 0)) /
+        86400000
+    );
 
     res.status(200).json({
       timezone: tz,
+
+      date: {
+        weekday: get(dateParts, 'weekday'),
+        day: get(dateParts, 'day'),
+        month: get(dateParts, 'month'),
+        year: get(dateParts, 'year')
+      },
+
+      time: {
+        hours: get(timeParts, 'hour'),
+        minutes: get(timeParts, 'minute'),
+        seconds: get(timeParts, 'second')
+      },
+
       iso_utc: now.toISOString(),
-      local_time: localTime,
-      weekday: weekday,
-      day_of_year: dayOfYear,
-      unix: Math.floor(now.getTime() / 1000)
+      unix: Math.floor(now.getTime() / 1000),
+      day_of_year: dayOfYear
     });
 
   } catch (err) {
