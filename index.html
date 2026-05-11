@@ -1,15 +1,1 @@
-<!DOCTYPE html>
-<html>
-<body>
-<pre id="info"></pre>
-<script>
-const now = new Date();
-document.getElementById('info').textContent = 
-  'datetime: ' + now.toISOString() + '\n' +
-  'timezone: ' + Intl.DateTimeFormat().resolvedOptions().timeZone + '\n' +
-  'day_of_week: ' + now.getDay() + '\n' +
-  'day_of_year: ' + Math.floor((now - new Date(now.getFullYear(),0,0))/86400000) + '\n' +
-  'week_number: ' + Math.ceil(((now-new Date(now.getFullYear(),0,1))/86400000+1)/7);
-</script>
-</body>
-</html>
+
