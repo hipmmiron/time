@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<body>
+<pre id="info"></pre>
+<script>
+fetch('https://worldtimeapi.org/api/ip')
+  .then(r => r.json())
+  .then(d => {
+    document.getElementById('info').textContent = 
+      'datetime: ' + d.datetime + '\n' +
+      'timezone: ' + d.timezone + '\n' +
+      'day_of_week: ' + d.day_of_week + '\n' +
+      'day_of_year: ' + d.day_of_year + '\n' +
+      'week_number: ' + d.week_number;
+  });
+</script>
+</body>
+</html>
