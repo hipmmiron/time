@@ -1,6 +1,6 @@
 {
   "rewrites": [
-    { "source": "/", "destination": "/api/time" }
+    { "source": "/", "destination": "/api/time.js" }
   ]
 }
 
