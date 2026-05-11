@@ -3,16 +3,13 @@
 <body>
 <pre id="info"></pre>
 <script>
-fetch('https://worldtimeapi.org/api/ip')
-  .then(r => r.json())
-  .then(d => {
-    document.getElementById('info').textContent = 
-      'datetime: ' + d.datetime + '\n' +
-      'timezone: ' + d.timezone + '\n' +
-      'day_of_week: ' + d.day_of_week + '\n' +
-      'day_of_year: ' + d.day_of_year + '\n' +
-      'week_number: ' + d.week_number;
-  });
+const now = new Date();
+document.getElementById('info').textContent = 
+  'datetime: ' + now.toISOString() + '\n' +
+  'timezone: ' + Intl.DateTimeFormat().resolvedOptions().timeZone + '\n' +
+  'day_of_week: ' + now.getDay() + '\n' +
+  'day_of_year: ' + Math.floor((now - new Date(now.getFullYear(),0,0))/86400000) + '\n' +
+  'week_number: ' + Math.ceil(((now-new Date(now.getFullYear(),0,1))/86400000+1)/7);
 </script>
 </body>
 </html>
